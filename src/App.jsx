@@ -119,7 +119,7 @@ function App() {
       <div
         style={{ marginBottom: "20px", marginTop: "20px", textAlign: "center" }}
       >
-        <Typography variant="h4">Smart Streetlight System</Typography>
+        <Typography variant="h4">Smart Streetlight Monitoring</Typography>
         <Typography variant="h5">
           Tugas Besar Rekayasa Sistem dan Teknologi Informasi
         </Typography>
