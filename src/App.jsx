@@ -155,7 +155,7 @@ function App() {
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 500 }} aria-label="simple table">
-            <TableHead>
+            <TableHead style={{ backgroundColor: "#f5ad4e" }}>
               <TableRow>
                 <TableCell>
                   <strong>Metrics</strong>
@@ -190,7 +190,7 @@ function App() {
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 500 }} aria-label="simple table">
-            <TableHead>
+            <TableHead style={{ backgroundColor: "#f5ad4e" }}>
               <TableRow>
                 <TableCell>
                   <strong>Metrics</strong>
