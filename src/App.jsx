@@ -8,7 +8,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 function App() {
   const [data, setData] = useState([]);
@@ -79,6 +80,7 @@ function App() {
   };
 
   const createAverageRow = () => {
+    if (data.length == 0) return [];
     const rows = countAverage(data);
     return [
       createData(
@@ -124,6 +126,21 @@ function App() {
           Tugas Besar Rekayasa Sistem dan Teknologi Informasi
         </Typography>
         <Typography variant="h5">K2 Kelompok 7</Typography>
+      </div>
+      <div
+        style={{
+          padding: "20px",
+          margin: "auto",
+          width: "50%",
+          textAlign: "center",
+        }}
+      >
+        <Grid marginLeft={100} container gridRow={1} spacing={3}>
+          <Typography onClick={() => window.location.reload()}>
+            Refresh Data
+          </Typography>
+          <RefreshIcon onClick={() => window.location.reload()} />
+        </Grid>
       </div>
       <div
         style={{
