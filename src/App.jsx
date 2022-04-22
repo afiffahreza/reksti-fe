@@ -8,13 +8,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Typography } from "@mui/material";
 
 function App() {
   const [data, setData] = useState([]);
   const [latestData, setLatestData] = useState({});
 
-  const createData = (name, value) => {
-    return { name, value };
+  const createData = (name, value, desc) => {
+    return { name, value, desc };
   };
 
   const createLatestRow = () => {
@@ -34,11 +35,27 @@ function App() {
         second: "2-digit",
       }).format(currentData.time.$date);
       return [
-        createData("Time", date),
-        createData("Light Data (Environment)", currentData.ldrLingkungan),
-        createData("Light Data (Lamp)", currentData.ldrLampu),
-        createData("Temperature", currentData.suhu),
-        createData("Weather", currentData.cuaca),
+        createData("Time", date, "Time of the latest sensor reading"),
+        createData(
+          "Light Data (Environment)",
+          currentData.ldrLingkungan,
+          "LDR Data of the environment, lower values means more light"
+        ),
+        createData(
+          "Light Data (Lamp)",
+          currentData.ldrLampu,
+          "LDR Data of the lamp, should be low when the environment high value/dark"
+        ),
+        createData(
+          "Temperature",
+          currentData.suhu,
+          "Temperature of the environment in Celcius"
+        ),
+        createData(
+          "Weather",
+          currentData.cuaca,
+          "Weather condition of the environment"
+        ),
       ];
     } else return [];
   };
@@ -64,9 +81,21 @@ function App() {
   const createAverageRow = () => {
     const rows = countAverage(data);
     return [
-      createData("Light Data (Environment)", rows.ldrLingkungan),
-      createData("Light Data (Lamp)", rows.ldrLampu),
-      createData("Temperature", rows.suhu),
+      createData(
+        "Light Data (Environment)",
+        rows.ldrLingkungan,
+        "LDR Data of the environment, lower values means more light"
+      ),
+      createData(
+        "Light Data (Lamp)",
+        rows.ldrLampu,
+        "LDR Data of the lamp, should be low when the environment high value/dark"
+      ),
+      createData(
+        "Temperature",
+        rows.suhu,
+        "Temperature of the environment in Celcius"
+      ),
     ];
   };
 
@@ -87,60 +116,93 @@ function App() {
 
   return (
     <div>
-      <h1>Smart Street Light</h1>
-      <TableContainer
-        component={Paper}
-        sx={{ width: "50%", alignItems: "center", justifyContent: "center" }}
+      <div
+        style={{ marginBottom: "20px", marginTop: "20px", textAlign: "center" }}
       >
-        <Table sx={{ minWidth: 500 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Metrics</TableCell>
-              <TableCell align="right">Value</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {createLatestRow().map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.value}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <br />
-      <TableContainer
-        component={Paper}
-        sx={{ width: "50%", alignItems: "center", justifyContent: "center" }}
+        <Typography variant="h4">Smart Streetlight System</Typography>
+        <Typography variant="h5">
+          Tugas Besar Rekayasa Sistem dan Teknologi Informasi
+        </Typography>
+        <Typography variant="h5">K2 Kelompok 7</Typography>
+      </div>
+      <div
+        style={{
+          padding: "20px",
+          margin: "auto",
+          width: "50%",
+          textAlign: "center",
+        }}
       >
-        <Table sx={{ minWidth: 500 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Metrics</TableCell>
-              <TableCell align="right">Value</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {createAverageRow().map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
+        <Typography marginY={2} variant="h6">
+          Latest Data
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 500 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <strong>Metrics</strong>
                 </TableCell>
-                <TableCell align="right">{row.value}</TableCell>
+                <TableCell align="left">
+                  <strong>Value</strong>
+                </TableCell>
+                <TableCell align="left">
+                  <strong>Description</strong>
+                </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {createLatestRow().map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="left">{row.value}</TableCell>
+                  <TableCell align="left">{row.desc}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <br />
+        <Typography marginY={2} variant="h6">
+          Average Last 10 Minutes
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 500 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <strong>Metrics</strong>
+                </TableCell>
+                <TableCell align="left">
+                  <strong>Value</strong>
+                </TableCell>
+                <TableCell align="left">
+                  <strong>Description</strong>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {createAverageRow().map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="left">{row.value}</TableCell>
+                  <TableCell align="left">{row.desc}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 }
